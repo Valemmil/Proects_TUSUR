@@ -1,0 +1,15 @@
+D:\File\Proect\SiT_5sem_1lab_C\SiT_5sem_1lab_C\bin\Debug\net6.0\SiT_5sem_1lab_C.exe
+D:\File\Proect\SiT_5sem_1lab_C\SiT_5sem_1lab_C\bin\Debug\net6.0\SiT_5sem_1lab_C.deps.json
+D:\File\Proect\SiT_5sem_1lab_C\SiT_5sem_1lab_C\bin\Debug\net6.0\SiT_5sem_1lab_C.runtimeconfig.json
+D:\File\Proect\SiT_5sem_1lab_C\SiT_5sem_1lab_C\bin\Debug\net6.0\SiT_5sem_1lab_C.dll
+D:\File\Proect\SiT_5sem_1lab_C\SiT_5sem_1lab_C\bin\Debug\net6.0\SiT_5sem_1lab_C.pdb
+D:\File\Proect\SiT_5sem_1lab_C\SiT_5sem_1lab_C\obj\Debug\net6.0\SiT_5sem_1lab_C.csproj.AssemblyReference.cache
+D:\File\Proect\SiT_5sem_1lab_C\SiT_5sem_1lab_C\obj\Debug\net6.0\SiT_5sem_1lab_C.GeneratedMSBuildEditorConfig.editorconfig
+D:\File\Proect\SiT_5sem_1lab_C\SiT_5sem_1lab_C\obj\Debug\net6.0\SiT_5sem_1lab_C.AssemblyInfoInputs.cache
+D:\File\Proect\SiT_5sem_1lab_C\SiT_5sem_1lab_C\obj\Debug\net6.0\SiT_5sem_1lab_C.AssemblyInfo.cs
+D:\File\Proect\SiT_5sem_1lab_C\SiT_5sem_1lab_C\obj\Debug\net6.0\SiT_5sem_1lab_C.csproj.CoreCompileInputs.cache
+D:\File\Proect\SiT_5sem_1lab_C\SiT_5sem_1lab_C\obj\Debug\net6.0\SiT_5sem_1lab_C.dll
+D:\File\Proect\SiT_5sem_1lab_C\SiT_5sem_1lab_C\obj\Debug\net6.0\refint\SiT_5sem_1lab_C.dll
+D:\File\Proect\SiT_5sem_1lab_C\SiT_5sem_1lab_C\obj\Debug\net6.0\SiT_5sem_1lab_C.pdb
+D:\File\Proect\SiT_5sem_1lab_C\SiT_5sem_1lab_C\obj\Debug\net6.0\SiT_5sem_1lab_C.genruntimeconfig.cache
+D:\File\Proect\SiT_5sem_1lab_C\SiT_5sem_1lab_C\obj\Debug\net6.0\ref\SiT_5sem_1lab_C.dll

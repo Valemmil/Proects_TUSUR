@@ -1,0 +1,15 @@
+﻿  Fraction.cpp
+  OOP_4sem_4lab.cpp
+  Polinom.cpp
+D:\File\Proect\OOP_4sem_4lab\OOP_4sem_4lab\Polinom.cpp(86,22): warning C4018: <=: несоответствие типов со знаком и без знака
+D:\File\Proect\OOP_4sem_4lab\OOP_4sem_4lab\Polinom.cpp(91,22): warning C4018: <=: несоответствие типов со знаком и без знака
+D:\File\Proect\OOP_4sem_4lab\OOP_4sem_4lab\Polinom.cpp(96,22): warning C4018: <=: несоответствие типов со знаком и без знака
+D:\File\Proect\OOP_4sem_4lab\OOP_4sem_4lab\Polinom.cpp(97,11): warning C4018: >=: несоответствие типов со знаком и без знака
+D:\File\Proect\OOP_4sem_4lab\OOP_4sem_4lab\Polinom.cpp(112,22): warning C4018: <=: несоответствие типов со знаком и без знака
+D:\File\Proect\OOP_4sem_4lab\OOP_4sem_4lab\Polinom.cpp(118,22): warning C4018: <=: несоответствие типов со знаком и без знака
+D:\File\Proect\OOP_4sem_4lab\OOP_4sem_4lab\Polinom.cpp(123,22): warning C4018: <=: несоответствие типов со знаком и без знака
+D:\File\Proect\OOP_4sem_4lab\OOP_4sem_4lab\Polinom.cpp(124,11): warning C4018: >=: несоответствие типов со знаком и без знака
+D:\File\Proect\OOP_4sem_4lab\OOP_4sem_4lab\Polinom.cpp(145,21): warning C4018: <=: несоответствие типов со знаком и без знака
+D:\File\Proect\OOP_4sem_4lab\OOP_4sem_4lab\Polinom.cpp(146,22): warning C4018: <=: несоответствие типов со знаком и без знака
+  Создание кода...
+  OOP_4sem_4lab.vcxproj -> D:\File\Proect\OOP_4sem_4lab\x64\Debug\OOP_4sem_4lab.exe

@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v6.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v6.0": {
+      "SiT_5sem_1lab_C/1.0.0": {
+        "runtime": {
+          "SiT_5sem_1lab_C.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "SiT_5sem_1lab_C/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

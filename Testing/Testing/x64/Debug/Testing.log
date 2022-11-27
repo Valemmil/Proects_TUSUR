@@ -1,0 +1,4 @@
+﻿  Testing.cpp
+D:\File\Proect\Testing\Testing\Testing.cpp(675,25): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+D:\File\Proect\Testing\Testing\Testing.cpp(675,22): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+  Testing.vcxproj -> D:\File\Proect\Testing\x64\Debug\Testing.exe

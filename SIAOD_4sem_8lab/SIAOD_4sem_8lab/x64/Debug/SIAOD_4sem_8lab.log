@@ -1,0 +1,4 @@
+﻿  SIAOD_4sem_8lab.cpp
+D:\File\Proect\SIAOD_4sem_8lab\SIAOD_4sem_8lab\SIAOD_4sem_8lab.cpp(37,20): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
+D:\File\Proect\SIAOD_4sem_8lab\SIAOD_4sem_8lab\SIAOD_4sem_8lab.cpp(38,16): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
+  SIAOD_4sem_8lab.vcxproj -> D:\File\Proect\SIAOD_4sem_8lab\x64\Debug\SIAOD_4sem_8lab.exe

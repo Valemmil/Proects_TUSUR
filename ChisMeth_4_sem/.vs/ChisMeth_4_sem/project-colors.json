@@ -1,0 +1,16 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "b2f52e7a-8601-45fb-9253-a64a081ef98c": {
+      "ProjectGuid": "b2f52e7a-8601-45fb-9253-a64a081ef98c",
+      "DisplayName": "ChisMeth_1_lab",
+      "ColorIndex": 0
+    },
+    "0793b8ee-1d93-47aa-9a45-0b1e8892432d": {
+      "ProjectGuid": "0793b8ee-1d93-47aa-9a45-0b1e8892432d",
+      "DisplayName": "Solution Items",
+      "ColorIndex": 1
+    }
+  },
+  "NextColorIndex": 2
+}

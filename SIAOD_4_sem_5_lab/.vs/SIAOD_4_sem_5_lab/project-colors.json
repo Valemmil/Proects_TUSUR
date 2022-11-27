@@ -1,0 +1,21 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "97a29c82-cdf2-4e66-b412-68c62e126c81": {
+      "ProjectGuid": "97a29c82-cdf2-4e66-b412-68c62e126c81",
+      "DisplayName": "SIAOD_4_sem_5_lab",
+      "ColorIndex": 0
+    },
+    "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3": {
+      "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
+      "DisplayName": "Прочие файлы",
+      "ColorIndex": -1
+    },
+    "81dbec4f-421b-42b5-8a51-b895e4ada2aa": {
+      "ProjectGuid": "81dbec4f-421b-42b5-8a51-b895e4ada2aa",
+      "DisplayName": "Solution Items",
+      "ColorIndex": 1
+    }
+  },
+  "NextColorIndex": 2
+}
