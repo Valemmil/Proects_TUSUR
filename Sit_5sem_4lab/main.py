@@ -33,6 +33,11 @@ async def css_in():
         return style_str
 
 
+@app.route("/ws")
+async def web_socket(ws):
+    pass
+
+
 async def new_clien_connect(clien_socket: websockets.WebSocketClientProtocol, path: str):
     print("New connection")
     all_clients.append(clien_socket)
