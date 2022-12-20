@@ -1,99 +1,10 @@
-from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtCore import QTimer
+import numpy
+from PyQt5 import QtCore, QtWidgets
+from PyQt5.QtWidgets import QMessageBox
+
 from TSiSA_UI1 import Ui_Window_stap1
 from TSiSA_UI2 import Ui_Window_stap2
 from TSiSA_UI3 import Ui_Window_stap3
-from time import sleep
-
-
-# def main():
-#     import sys
-#     app = QtWidgets.QApplication(sys.argv)
-#     Window_stap1 = QtWidgets.QMainWindow()
-#     ui1 = Ui_Window_stap1()
-#     ui1.setupUi(Window_stap1)
-#     Window_stap1.show()
-#
-#     Window_stap2 = QtWidgets.QMainWindow()
-#     ui2 = Ui_Window_stap2()
-#     ui2.setupUi(Window_stap2)
-#     Window_stap2.show()
-#
-#     Window_stap3 = QtWidgets.QMainWindow()
-#     ui3 = Ui_Window_stap3()
-#     ui3.setupUi(Window_stap3)
-#     Window_stap3.show()
-#
-#     sys.exit(app.exec_())
-#
-#
-# if __name__ == '__main__':
-#     main()
-
-# from PyQt5 import QtCore, QtGui, QtWidgets
-# from PyQt5.Qt import *
-#
-
-# class Ui_Win1(object):
-#     def setupUi(self, Win1):
-#         Win1.setObjectName("Win1")
-#         Win1.resize(450, 800)
-#         self.widgetWin1 = QtWidgets.QWidget(Win1)
-#         self.widgetWin1.setObjectName("widgetWin1")
-#
-#         self.text1 = QtWidgets.QLabel(self.widgetWin1)
-#         self.text1.setGeometry(QtCore.QRect(197, 378, 56, 16))
-#         self.text1.setObjectName("text1")
-#
-#         Win1.setCentralWidget(self.widgetWin1)
-#         self.retranslateUi(Win1)
-#         QtCore.QMetaObject.connectSlotsByName(Win1)
-#
-#     def retranslateUi(self, Win1):
-#         _translate = QtCore.QCoreApplication.translate
-#         Win1.setWindowTitle(_translate("Win1", "MainWindow"))
-#         self.text1.setText(_translate("Win1", "Win1"))
-#
-#
-# class Ui_Win2(object):
-#     def setupUi(self, Win2):
-#         Win2.setObjectName("Win2")
-#         Win2.resize(450, 800)
-#         self.widgetWin2 = QtWidgets.QWidget(Win2)
-#         self.widgetWin2.setObjectName("widgetWin2")
-#         self.text2 = QtWidgets.QLabel(self.widgetWin2)
-#         self.text2.setGeometry(QtCore.QRect(197, 378, 56, 16))
-#         self.text2.setObjectName("text2")
-#
-#         Win2.setCentralWidget(self.widgetWin2)
-#         self.retranslateUi(Win2)
-#         QtCore.QMetaObject.connectSlotsByName(Win2)
-#
-#     def retranslateUi(self, Win2):
-#         _translate = QtCore.QCoreApplication.translate
-#         Win2.setWindowTitle(_translate("Win2", "MainWindow"))
-#         self.text2.setText(_translate("Win2", "Win2"))
-#
-#
-# class Ui_Win3(object):
-#     def setupUi(self, Win3):
-#         Win3.setObjectName("Win3")
-#         Win3.resize(450, 800)
-#         self.widgetWin3 = QtWidgets.QWidget(Win3)
-#         self.widgetWin3.setObjectName("widgetWin3")
-#         self.text3 = QtWidgets.QLabel(self.widgetWin3)
-#         self.text3.setGeometry(QtCore.QRect(197, 378, 56, 16))
-#         self.text3.setObjectName("text3")
-#
-#         Win3.setCentralWidget(self.widgetWin3)
-#
-#         self.retranslateUi(Win3)
-#         QtCore.QMetaObject.connectSlotsByName(Win3)
-#
-#     def retranslateUi(self, Win3):
-#         _translate = QtCore.QCoreApplication.translate
-#         Win3.setWindowTitle(_translate("Win3", "MainWindow"))
-#         self.text3.setText(_translate("Win3", "Win3"))
 
 
 class stap1(QtWidgets.QMainWindow, Ui_Window_stap1):
@@ -120,6 +31,12 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.stacked = QtWidgets.QStackedWidget(self)
         self.setCentralWidget(self.stacked)
+        self.num_experts = 0
+        self.num_alters = 0
+        self.experts_tables = numpy.array([])
+        self.generalized_matrix = numpy.zeros((self.num_alters, self.num_alters))
+        self.rank_matrix = numpy.array([])
+        self.concordazhiya = 0.0
 
         self.window_stap1 = stap1(self)
         # self.window_Win1.setStyleSheet('#Win1 {background-color: #ffbdcc;}')
@@ -134,47 +51,211 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.window_stap1.btn_save.clicked.connect(self.go_stap2)
         self.window_stap2.btn_save.clicked.connect(self.go_stap3)
+        self.window_stap1.info_button.clicked.connect(self.info_step1)
+        self.window_stap2.info_button.clicked.connect(self.info_step2)
+        self.window_stap3.info_button.clicked.connect(self.info_step3)
 
-        # +++ vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
-    #     self.create_buttons(self.window_stap1)
-    #
-    # def create_buttons(self, parent):
-    #     bnt = QtWidgets.QPushButton("Win1", parent)
-    #     #        self.bnt.setGeometry(QtCore.QRect(0, 772, 150, 28)) # установите свою геометрию
-    #     bnt.setGeometry(QtCore.QRect(0, 572, 150, 28))
-    #
-    #     bnt_2 = QtWidgets.QPushButton("Win2", parent)
-    #     #        self.bnt_2.setGeometry(QtCore.QRect(150, 772, 150, 28))
-    #     bnt_2.setGeometry(QtCore.QRect(150, 572, 150, 28))
-    #
-    #     bnt_3 = QtWidgets.QPushButton("Win3", parent)
-    #     #        self.bnt_3.setGeometry(QtCore.QRect(300, 772, 150, 28))
-    #     bnt_3.setGeometry(QtCore.QRect(300, 572, 150, 28))
-    #
-    #     bnt.clicked.connect(self.go_win1)
-    #     bnt_2.clicked.connect(self.go_win2)
-    #     bnt_3.clicked.connect(self.go_win3)
-    #     bnt.show()
-    #     bnt_2.show()
-    #     bnt_3.show()
-    #
-    # def go_stap1(self):
-    #     self.resize(self.window_stap1.size())
-    #     self.stacked.setCurrentIndex(0)
-    #     # self.create_buttons(self.window_stap1)
+
+    @staticmethod
+    def info_step1():
+        msgBox = QMessageBox()
+        msgBox.setIcon(QMessageBox.Information)
+        msgBox.setText("Этот метод представляет собой процедуру установления предпочтения объектов при сравнении всех "
+                       "возможных пар. Результаты сравнения всех пар объектов удобно представлять в виде матрицы с "
+                       "булевыми значениями.\nВведите количество экспертов и альтернатив.")
+        msgBox.setWindowTitle("Групповое парное сравнение")
+        msgBox.setStandardButtons(QMessageBox.Ok)
+        msgBox.exec_()
+
+    @staticmethod
+    def info_step2():
+        msgBox = QMessageBox()
+        msgBox.setIcon(QMessageBox.Information)
+        msgBox.setText("Введите значения в матрицу парного сравнения\n"
+                       "Правила:\n"
+                       "1) w[i][j] = 1; \n"
+                       "2) если w[i][j] = 1, то w[j][i] = 0; \n"
+                       "3) если w[i][j] = 1 и w[j][k] = 1, то w[i][k] = 1.")
+        msgBox.setWindowTitle("Групповое парное сравнение")
+        msgBox.setStandardButtons(QMessageBox.Ok)
+        msgBox.exec_()\
+
+
+    @staticmethod
+    def error_stap2():
+        msgBox = QMessageBox()
+        msgBox.setIcon(QMessageBox.Information)
+        msgBox.setText("Введённые данные нарушают правила построения матриц парных сравнений\n"
+                       "Правила:\n"
+                       "1) w[i][j] = 1; \n"
+                       "2) если w[i][j] = 1, то w[j][i] = 0; \n"
+                       "3) если w[i][j] = 1 и w[j][k] = 1, то w[i][k] = 1.")
+        msgBox.setWindowTitle("Ошибка")
+        msgBox.setStandardButtons(QMessageBox.Ok)
+        msgBox.exec_()
+
+    @staticmethod
+    def info_step3():
+        msgBox = QMessageBox()
+        msgBox.setIcon(QMessageBox.Information)
+        msgBox.setText("В окне представлена обобщённая матрица, ранги альтернатив и коэффициент конкордации. "
+                       "Обощённая матрица показывает итоговую иерархию альтернатив. "
+                       "Ранги альтернатив показывают градацию альтернатив по приоритетности "
+                       "(значение 1 - самая приоритетная альтернатива). "
+                       "Коэффициент конкордации представляет числовое отображение согласованности экспертов.")
+        msgBox.setWindowTitle("Групповое парное сравнение")
+        msgBox.setStandardButtons(QMessageBox.Ok)
+        msgBox.exec_()
 
     def go_stap2(self):
         if self.window_stap1.num_expert.toPlainText().isdigit() and self.window_stap1.num_alter.toPlainText().isdigit():
-            self.resize(self.window_stap2.size())
-            self.stacked.setCurrentIndex(1)
+            if int(self.window_stap1.num_expert.toPlainText()) >= 2 and \
+                    int(self.window_stap1.num_alter.toPlainText()) >= 2:
+                self.num_experts = int(self.window_stap1.num_expert.toPlainText())
+                self.num_alters = int(self.window_stap1.num_alter.toPlainText())
+                self.window_stap2.tableWidget.setRowCount(self.num_alters)
+                self.window_stap2.tableWidget.setColumnCount(self.num_alters)
+                top_table = self.window_stap2.tableWidget.geometry().top()
+                width_table = 35 * self.num_alters + 17
+                height_table = 30 * self.num_alters + 23
+                self.resize(self.window_stap2.size())
+                self.window_stap2.tableWidget.setGeometry(
+                    QtCore.QRect(
+                        ((self.size().width() - width_table) // 2),
+                        top_table,
+                        width_table,
+                        height_table
+                    )
+                )
+
+                self.stacked.setCurrentIndex(1)
+                return
+        msgBox = QMessageBox()
+        msgBox.setIcon(QMessageBox.Warning)
+        msgBox.setText("Введённные данные не коректны!\nЗначения должны быть числовыми и значения больше или равны 2")
+        msgBox.setWindowTitle("Ошибка")
+        msgBox.setStandardButtons(QMessageBox.Ok)
+        msgBox.exec_()
+        self.window_stap1.num_expert.clear()
+        self.window_stap1.num_alter.clear()
         # self.create_buttons(self.window_stap2)
 
     def go_stap3(self):
-        self.window_stap2.tableWidget.items()
-        self.resize(self.window_stap3.size())
-        self.stacked.setCurrentIndex(2)
-        # self.create_buttons(self.window_stap3)
-    # +++ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        try:
+            table = self.window_stap2.tableWidget.model().index
+            table_temp = numpy.zeros((self.num_alters, self.num_alters))
+            for i in range(self.num_alters):
+                for j in range(self.num_alters):
+                    if not (int(table(i, j).data()) == 0 or int(table(i, j).data()) == 1):
+                        self.window_stap2.tableWidget.clear()
+                        # print("1")
+                        self.error_stap2()
+                        return
+                    table_temp[i][j] = int(table(i, j).data())
+
+            for i in range(0, self.num_alters):
+                for j in range(i + 1, self.num_alters):
+                    if table_temp[i][j] == table_temp[j][i]:
+                        self.window_stap2.tableWidget.clear()
+                        # print("2")
+                        self.error_stap2()
+                        return
+                if table_temp[i][i] == 0:
+                    self.window_stap2.tableWidget.clear()
+                    # print("3")
+                    self.error_stap2()
+                    return
+
+            rangs = table_temp.sum(axis=0)[:]
+
+            set_rangs = set(rangs)
+            if len(rangs) != len(set_rangs):
+                self.window_stap2.tableWidget.clear()
+                # print("4")
+                self.error_stap2()
+                return
+
+            self.rank_matrix = numpy.append(self.rank_matrix, rangs)
+            self.rank_matrix = self.rank_matrix.reshape(
+                (int_r(self.rank_matrix.size / self.num_alters), self.num_alters)
+            )
+
+            self.experts_tables = numpy.append(self.experts_tables, table_temp)
+
+            # print(self.experts)
+
+            if int_r(self.experts_tables.size / (self.num_alters ** 2)) == self.num_experts:
+                self.experts_tables = self.experts_tables.reshape(
+                    (int_r(self.experts_tables.size / (self.num_alters ** 2)), self.num_alters, self.num_alters))
+
+                self.generalized_matrix = self.experts_tables.sum(axis=0)[:] / self.num_experts
+                self.generalized_matrix = self.generalized_matrix.reshape(self.num_alters, self.num_alters)
+
+                self.resize(self.window_stap3.size())
+                self.window_stap3.tableWidget.setRowCount(self.num_alters)
+                self.window_stap3.tableWidget.setColumnCount(self.num_alters)
+                top_table = self.window_stap3.tableWidget.geometry().top()
+                width_table = 35 * self.num_alters + 17
+                height_table = 30 * self.num_alters + 23
+                self.window_stap3.tableWidget.setGeometry(
+                    QtCore.QRect(
+                        ((self.size().width() - width_table) // 2),
+                        top_table,
+                        width_table,
+                        height_table
+                    )
+                )
+
+                for i in range(self.num_alters):
+                    for j in range(self.num_alters):
+                        self.window_stap3.tableWidget.setItem(
+                            i, j, QtWidgets.QTableWidgetItem(f"{int_r(self.generalized_matrix[i][j])}")
+                        )
+
+                self.window_stap3.tableWidget_2.setRowCount(1)
+                self.window_stap3.tableWidget_2.setColumnCount(self.num_alters)
+                top_table = self.window_stap3.tableWidget_2.geometry().top()
+                width_table = 35 * self.num_alters + 17
+                height_table = 53
+                self.window_stap3.tableWidget_2.setGeometry(
+                    QtCore.QRect(
+                        ((self.size().width() - width_table) // 2),
+                        top_table,
+                        width_table,
+                        height_table
+                    )
+                )
+                summ = []
+                for i in range(self.num_alters):
+                    summ_temp = 0
+                    for j in range(self.num_alters):
+                        summ_temp += int_r(self.generalized_matrix[j][i])
+                    summ = numpy.append(summ, summ_temp)
+
+                for i in range(self.num_alters):
+                    self.window_stap3.tableWidget_2.setItem(
+                        0, i, QtWidgets.QTableWidgetItem(f"{int_r(summ[i])}")
+                    )
+
+                self.concordazhiya = (12 * sum(
+                    (self.rank_matrix.sum(axis=0) - (self.rank_matrix.sum() * (1/self.num_alters))) ** 2
+                )) / (self.num_experts ** 2 * (self.num_alters ** 3 - self.num_alters))
+
+                self.window_stap3.label_4.setText("{0:.4f}".format(self.concordazhiya))
+                self.stacked.setCurrentIndex(2)
+                return
+
+            self.window_stap2.label.setText(
+                f"Эксперт {int_r(self.experts_tables.size / (self.num_alters ** 2)) + 1}"
+            )
+            self.window_stap2.tableWidget.clear()
+        except Exception as _ex:
+            print(_ex)
+
+
+def int_r(num):
+    num = int(num + (0.5 if num > 0 else -0.5))
+    return num
 
 
 if __name__ == '__main__':
@@ -183,6 +264,5 @@ if __name__ == '__main__':
     app = QtWidgets.QApplication(argv)
     window = MainWindow()
     window.resize(window.window_stap1.size())
-    # window.resize(450, 650)  # <---- (450, 800)
     window.show()
     exit(app.exec_())
