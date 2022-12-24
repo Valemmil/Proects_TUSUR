@@ -5,7 +5,5 @@ OOP_4sem_3lab
 SIAOD_4sem_6lab
 .idea
 __pycache__
-TSiSA_cursrab/TSiSA_UI1.ui
-TSiSA_cursrab/TSiSA_UI2.ui
-TSiSA_cursrab/TSiSA_UI3.ui
 TSiSA_cursrab/output
+*.ui

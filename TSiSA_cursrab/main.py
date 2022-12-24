@@ -5,6 +5,7 @@ from PyQt5.QtWidgets import QMessageBox
 from TSiSA_UI1 import Ui_Window_stap1
 from TSiSA_UI2 import Ui_Window_stap2
 from TSiSA_UI3 import Ui_Window_stap3
+from TSiSA_UI4 import Ui_Window_alt
 
 
 class stap1(QtWidgets.QMainWindow, Ui_Window_stap1):
@@ -25,12 +26,21 @@ class stap3(QtWidgets.QMainWindow, Ui_Window_stap3):
         self.setupUi(self)
 
 
+class alt(QtWidgets.QMainWindow, Ui_Window_alt):
+    def __init__(self, parent=None):
+        super(alt, self).__init__(parent)
+        self.setupUi(self)
+
+
 class MainWindow(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()
 
         self.stacked = QtWidgets.QStackedWidget(self)
         self.setCentralWidget(self.stacked)
+        self.criteria = ''
+        self.goal = ''
+        self.alters = []
         self.num_experts = 0
         self.num_alters = 0
         self.experts_tables = numpy.array([])
@@ -39,22 +49,24 @@ class MainWindow(QtWidgets.QMainWindow):
         self.concordazhiya = 0.0
 
         self.window_stap1 = stap1(self)
-        # self.window_Win1.setStyleSheet('#Win1 {background-color: #ffbdcc;}')
         self.window_stap2 = stap2(self)
-        # self.window_Win2.setStyleSheet('#Win2 {background-color: #ccffbd;}')
         self.window_stap3 = stap3(self)
-        # self.window_Win3.setStyleSheet('#Win3 {background-color: #bdccccff;}')
+        self.window_alt = alt(self)
 
         self.stacked.addWidget(self.window_stap1)
         self.stacked.addWidget(self.window_stap2)
         self.stacked.addWidget(self.window_stap3)
+        self.stacked.addWidget(self.window_alt)
 
-        self.window_stap1.btn_save.clicked.connect(self.go_stap2)
+        self.window_stap1.btn_save.clicked.connect(self.go_alt)
+        self.window_alt.btn_save.clicked.connect(self.go_stap2)
         self.window_stap2.btn_save.clicked.connect(self.go_stap3)
         self.window_stap1.info_button.clicked.connect(self.info_step1)
+        self.window_alt.info_button.clicked.connect(self.info_step1)
         self.window_stap2.info_button.clicked.connect(self.info_step2)
         self.window_stap3.info_button.clicked.connect(self.info_step3)
-
+        self.window_stap2.info_button_2.clicked.connect(self.info_criteria)
+        self.window_stap3.info_button_2.clicked.connect(self.info_criteria)
 
     @staticmethod
     def info_step1():
@@ -78,8 +90,7 @@ class MainWindow(QtWidgets.QMainWindow):
                        "3) если w[i][j] = 1 и w[j][k] = 1, то w[i][k] = 1.")
         msgBox.setWindowTitle("Групповое парное сравнение")
         msgBox.setStandardButtons(QMessageBox.Ok)
-        msgBox.exec_()\
-
+        msgBox.exec_()
 
     @staticmethod
     def error_stap2():
@@ -107,7 +118,21 @@ class MainWindow(QtWidgets.QMainWindow):
         msgBox.setStandardButtons(QMessageBox.Ok)
         msgBox.exec_()
 
-    def go_stap2(self):
+    def info_criteria(self):
+        msgBox = QMessageBox()
+        msgBox.setIcon(QMessageBox.Information)
+        str_info = 'Цель: ' + self.goal + '\nКритерий: ' + self.criteria
+        num = 1
+        for alter in self.alters:
+            str_info += f'\nАльтернатива {num}: ' + alter
+            num += 1
+
+        msgBox.setText(str_info)
+        msgBox.setWindowTitle("Групповое парное сравнение")
+        msgBox.setStandardButtons(QMessageBox.Ok)
+        msgBox.exec_()
+
+    def go_alt(self):
         if self.window_stap1.num_expert.toPlainText().isdigit() and self.window_stap1.num_alter.toPlainText().isdigit():
             if int(self.window_stap1.num_expert.toPlainText()) >= 2 and \
                     int(self.window_stap1.num_alter.toPlainText()) >= 2:
@@ -127,8 +152,10 @@ class MainWindow(QtWidgets.QMainWindow):
                         height_table
                     )
                 )
+                self.goal = self.window_stap1.num_expert_2.toPlainText()
+                self.criteria = self.window_stap1.num_alter_2.toPlainText()
 
-                self.stacked.setCurrentIndex(1)
+                self.stacked.setCurrentIndex(3)
                 return
         msgBox = QMessageBox()
         msgBox.setIcon(QMessageBox.Warning)
@@ -138,7 +165,13 @@ class MainWindow(QtWidgets.QMainWindow):
         msgBox.exec_()
         self.window_stap1.num_expert.clear()
         self.window_stap1.num_alter.clear()
-        # self.create_buttons(self.window_stap2)
+
+    def go_stap2(self):
+        self.alters.append(self.window_alt.textEdit.toPlainText())
+        self.window_alt.label.setText(f'Альтернатива {len(self.alters) + 1}')
+        self.window_alt.textEdit.clear()
+        if len(self.alters) >= self.num_alters:
+            self.stacked.setCurrentIndex(1)
 
     def go_stap3(self):
         try:
