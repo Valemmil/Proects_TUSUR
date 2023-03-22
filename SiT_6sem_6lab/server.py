@@ -1,5 +1,4 @@
 import socket
-import select
 
 
 def main():
@@ -20,7 +19,7 @@ def main():
 
 def handle_client(client_socket):
     # Читаем заголовок SOCKS4 запроса
-    header = client_socket.recv(20)
+    header = client_socket.recv(8)
     if len(header) < 8:
         print('Неверный заголовок')
         client_socket.close()
@@ -67,21 +66,16 @@ def relay_traffic(client_socket, destination_socket):
     print("Принимаю данные")
     while True:
         # Ожидаем данные от клиента или назначения
-        ready_sockets, _, _ = select.select([client_socket, destination_socket], [], [])
-        for ready_socket in ready_sockets:
-            data = ready_socket.recv(4096)
+        while True:
+            data = client_socket.recv(4096)
             if not data:
-                print("Нет данных")
-                return
+                break
+            destination_socket.sendall(data)
 
-            # print(data)
-            # Перенаправляем данные на другую сторону
-            if ready_socket is client_socket:
-                print('Send site')
-                destination_socket.send(data)
-            else:
-                print('Send client')
-                client_socket.send(data)
+            data = destination_socket.recv(4096)
+            if not data:
+                break
+            client_socket.sendall(data)
 
 
 if __name__ == '__main__':

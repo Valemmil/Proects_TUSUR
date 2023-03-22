@@ -13,7 +13,7 @@ def connect_to_proxy(address='localhost', port=1080):
     proxy_socket.send(socks_request)
 
     # Читаем заголовок SOCKS4 ответа
-    header = proxy_socket.recv(20)
+    header = proxy_socket.recv(8)
     if len(header) < 8:
         print('Неверный заголовок')
         proxy_socket.close()
@@ -25,16 +25,17 @@ def connect_to_proxy(address='localhost', port=1080):
         proxy_socket.close()
         return
 
-    text_request = input("Введите запрос:")
-
-    if text_request == "":
-        text_request = f"GET / HTTP/1.1\r\n" \
-                       f"Host:{host}\r\n" \
-                       f"User-Agent: Windows\r\n" \
-                       "\r\n"
-    proxy_socket.send(text_request.encode())
-
     while True:
+
+        text_request = input("Введите запрос:")
+
+        if text_request == "":
+            text_request = f"GET / HTTP/1.1\r\n" \
+                           f"Host:{host}\r\n" \
+                           f"User-Agent: Windows\r\n" \
+                           "\r\n"
+        proxy_socket.send(text_request.encode())
+
         data = proxy_socket.recv(4096)
         print(data)
 
