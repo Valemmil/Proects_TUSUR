@@ -778,3 +778,9 @@ FodyWeavers.xsd
 # Additional files built by Visual Studio
 
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,visualstudio,pycharm,python,dotnetcore
+PP_for_romy
+PP_for_yuly
+.ssh
+.vscode
+ORPO_7sem_project
+OlimpicCircles
