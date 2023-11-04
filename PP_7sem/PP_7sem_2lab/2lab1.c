@@ -9,35 +9,28 @@
 #include <stdio.h>
 #include <mpi.h>
 #include <stdlib.h>
-#define m 131  //20000
+#define m 19947  //20000
 #define dp 100.0f
 
-        /* Function for init input vector  */
-void initvec(int m1, float *arr1)
-    { 
-        int i;
-        // for(i=0; i<m1; i++)     arr1[i] = (float)(i+1)*0.1f;
-        for(i=0; i<m1; i++)
-            arr1[i] = (float)rand()/RAND_MAX * dp *2.0f - dp;
-    }
+
+/* Function for init input vector  */
+void initvec(int m1, double *arr1)
+{ 
+    int i;
+    for(i=0; i<m1; i++)
+        arr1[i] = (double)rand()/RAND_MAX * dp *2.0f - dp;
+}
+
 
 int main(int argc, char **argv)
 {
     int rank,size;
-    MPI_Status status;
     int nach,count,i,scol,ost;
-    float  va[m], *vb;
-    float  max1, min1;
-    float  lsum, gsum, avg;
-    int    indx1, indi1;
+    double  va[m], *vb;
+    double  ta[m], *tb;
+    double  x, *result_local, result[m];
     double time1,time2;
     int *displs, *rcounts;
-    // MPI_FLOAT_INT maxim, minim;
-    struct myst {
-    float val;
-    int   pos;
-    };
-    struct myst maxim, minim, omax, omin;
 
     MPI_Init(&argc,&argv);
     MPI_Comm_rank(MPI_COMM_WORLD,&rank);
@@ -48,16 +41,18 @@ int main(int argc, char **argv)
     if (rank==0)    /* Process 0 - master  */
     {
 
-        printf("Numbers of proccesses %d. \nElements in vector %d.\n",size,m);
+        printf("Numbers of proccesses %d. \nElements in vector %d.\n",size, m);
 
         /* Init vector vA  */
         initvec(m, va);
+        initvec(m, ta);
 
         time1=MPI_Wtime();  //Time begining calculating of programm
 
         /* Creation auxiliary arrays for data communication */
         displs  = (int *)malloc(size * sizeof(int));
         rcounts = (int *)malloc(size * sizeof(int));
+        x = (double)rand()/RAND_MAX * dp *2.0f - dp;
 
         for(i=0;i < size;i++)
         {
@@ -78,51 +73,41 @@ int main(int argc, char **argv)
     nach = rank*scol + (rank >= ost ? ost : 0);
 
     /* Storage for part of array in rank */
-    vb  = (float *)calloc(scol, sizeof(float));
+    vb  = (double *)calloc(scol, sizeof(double));
+    tb  = (double *)calloc(scol, sizeof(double));
+    result_local  = (double *)calloc(scol, sizeof(double));
 
-        /* Sending the parts of the vector vA to processes */
-    MPI_Scatterv(&va,rcounts,displs,MPI_FLOAT,vb,
-                 scol,MPI_FLOAT,0,MPI_COMM_WORLD);
+    /* Sending the parts of the vector vA and tA to processes */
+    MPI_Scatterv(&va, rcounts, displs,MPI_DOUBLE, vb,
+                 scol, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+    MPI_Scatterv(&ta, rcounts, displs, MPI_DOUBLE, tb,
+                 scol, MPI_DOUBLE, 0, MPI_COMM_WORLD);
     printf("Process %d Scol %d\n", rank, scol);
-    for (i = 0; i < scol; i++) printf("%8.2f",vb[i]);
-    printf("\n");
 
-    max1 = min1 = vb[0]; indx1 = indi1 = 0;
-    lsum = 0;
-    for (i=1; i < scol; i++)  
-    {
-        if (max1 < vb[i]) {max1 = vb[i]; indx1 = i;}
-        else
-        if (min1 > vb[i]) {min1 = vb[i]; indi1 = i;}
+    /* Sending constant x */
+    MPI_Bcast(&x, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
 
-        maxim.val = max1; maxim.pos = indx1 + nach;
-        minim.val = min1; minim.pos = indi1 + nach;
-        lsum = lsum + vb[i];
+    for (i = 0; i < scol; i++){
+        result_local[i] = vb[i] * x + tb[i];
     }
 
-    printf("MAXIMUM %8.2f %5d %5d\n", maxim.val, maxim.pos, maxim.pos - nach);
-    printf("MINIMUM %8.2f %5d %5d\n", minim.val, minim.pos, minim.pos - nach);
-
-    MPI_Reduce(&maxim, &omax, 1, MPI_FLOAT_INT, MPI_MAXLOC, 0, MPI_COMM_WORLD);
-    MPI_Reduce(&minim, &omin, 1, MPI_FLOAT_INT, MPI_MINLOC, 0, MPI_COMM_WORLD);
-    MPI_Reduce(&lsum,  &gsum, 1, MPI_FLOAT, MPI_SUM, 0, MPI_COMM_WORLD);
+    MPI_Gatherv(result_local, scol, MPI_DOUBLE, 
+                result, rcounts, displs, MPI_DOUBLE, 0, MPI_COMM_WORLD);
 
     if (rank==0)  /* Only master-process  */
     { //1
         time2=MPI_Wtime();  //Time ending programm
         printf("\nTime parallel calculation = %f s.\n",time2-time1);
-
-        printf("Max element %8.2f, index %5d.\n", omax.val, omax.pos);
-        printf("Min element %8.2f, index %5d.\n", omin.val, omin.pos);
-        avg = gsum/m;
-        printf("Average     %8.2f, Summa %8.2f\n", avg, gsum);
-        // prnvecl(m, va,"Vector va from parts");
+        printf("\n1) %f * %f + %f = %f\n...", va[0], x, ta[0], result[0]);
+        printf("\n%d) %f * %f + %f = %f\n", m, va[m-1], x, ta[m-1], result[m-1]);
 
         free(displs); free(rcounts);
     } //1 End work of master-process
 
 	/* Delete storage array VB of process */
     free(vb);
+    free(tb);
+    free(result_local);
 
     MPI_Finalize();
     return 0;
