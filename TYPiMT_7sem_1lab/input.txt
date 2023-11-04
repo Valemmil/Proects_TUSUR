@@ -1,0 +1,11 @@
+int 
+    abv, cde, ded, cto, int1;
+float ng23423, _ga45, 
+astories;     
+int af, f;
+int a, b, c;
+  int        short              alt   ;
+long double fgd  [ 1 ]  [1]       ,     wef ;
+int _a[1], fi [
+    3 
+    ] [ 10] [   4   ]  , g[1];int qw;
