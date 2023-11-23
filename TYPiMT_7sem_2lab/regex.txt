@@ -1,0 +1,16 @@
+\s*(?:(?<error_simb>\;\s*)|
+(?:(?:\b(?:int(?:\s+long|\s+short)?|double(?:\s+long)?|
+    long(?:\s+int|\s+double)?|short(?:\s+int)?|float|char)
+  |(?<error_type>\S+))
+\s+
+(?:(?:
+      (?:\b(?<error_id1>\w+(?:\s+\w+)+?|int|double|float|char|long|short)\b
+          |(?<error_id2>[^,;a-zA-Z_\s]\w*|\w+[^,;a-zA-Z_0-9\[\]\s]\w*)
+          |(?<id>[a-zA-Z_][a-zA-Z_0-9]*))
+        (?:
+         (?:\s*(?:\[\s*(?:[1-9]\d*)\s*\]))
+         |\s*(?<error_arr>\[\s*[^,;\[]+)\s*)*
+  )\s*(?:\,\s*|(?=\;))
+)+
+\s*\;\s*
+))
